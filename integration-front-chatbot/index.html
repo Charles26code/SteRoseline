@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Chatbot</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="main-chatbot">
+        <div id="container-chatbot" class="main-chatbot-close">
+
+            <div class="relative-chatbot">
+                <div class="header-chatbot">
+                    <div class="back-header-chatbot" onClick="ouvertureFermutureChatbot()"></div>
+                    <div class="img-header-chatbot" style="background-image: url('src/img/main-picture.png');">
+                        <div style="background-color: #18A93F;">
+
+                        </div>
+                    </div>
+                    <div class="text-header-chatbot">
+                        <h1>Marie Victoire</h1>
+                        <p>Votre conseillère en oenologie</p>
+                    </div>
+                    <div class="setting-header-chatbot"></div>
+                </div>
+                <div id="message-content-chatbot" class="message-content-chatbot">
+
+                    <!-- Première section d'affichage -->
+                    <div class="first-view-presentation">
+                        <div class="image-firstview"></div>
+                        <div class="text-firstview">
+                            <h1>Marie Victoire</h1>
+                            <p>Votre conseillère en oenologie</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="input-text-message-chatbot">
+                    <textarea id="contenu-message"></textarea>
+                    <div><button id='button-submit'></button></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="container-chatbot-img" onClick="ouvertureFermutureChatbot()" class="container-chatbot-close">
+
+            <div class="img-perso-chatbot" style=" background-image: url('src/img/main-picture.png');">
+                <div id="cross-img-perso-chatbot" class="cross-img-perso-chatbot">
+                </div>
+                <div class="message-chatbot-close">
+                    <p>Puis-je vous être utile ?</p>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <section></section>
+    <section>
+
+    </section>
+</body>
+
+</html>
+
+<script>
+    etatlancement = 1;
+
+    //affichage du chatbot
+    function ouvertureFermutureChatbot() {
+        if (document.getElementById('container-chatbot-img').className == 'container-chatbot-close') {
+            document.getElementById('container-chatbot-img').classList.remove('container-chatbot-close');
+            document.getElementById('container-chatbot-img').classList.add('container-chatbot-open');
+
+            document.getElementById('container-chatbot').classList.remove('main-chatbot-close');
+            document.getElementById('container-chatbot').classList.add('main-chatbot-open');
+
+            messageContentChatBot = document.getElementById('message-content-chatbot');
+            messageContentChatBot.scrollTop = messageContentChatBot.scrollHeight;
+
+            if (etatlancement == 1) {
+                setTimeout(lancementBot, 3000);
+                etatlancement = 0;
+            }
+
+        } else {
+            document.getElementById('container-chatbot-img').classList.add('container-chatbot-close');
+            document.getElementById('container-chatbot-img').classList.remove('container-chatbot-open');
+
+            document.getElementById('container-chatbot').classList.add('main-chatbot-close');
+            document.getElementById('container-chatbot').classList.remove('main-chatbot-open');
+
+            messageContentChatBot = document.getElementById('message-content-chatbot');
+            messageContentChatBot.scrollTop = messageContentChatBot.scrollHeight;
+
+
+        }
+    }
+
+    //Envoi message
+    document.getElementById("button-submit").addEventListener("click", function () {
+
+        if (document.getElementById('contenu-message').value != 'full-display') {
+
+            var div = document.createElement("div");
+            div.className = "message-chatbot container-message-user";
+
+            div.innerHTML = "<div><p>" + document.getElementById('contenu-message').value + "</p></div><p class='date-message'>4 : 53 PM</p>";
+            document.getElementById("message-content-chatbot").appendChild(div);
+
+            document.getElementById('contenu-message').value = '';
+
+        } else {
+            var div = document.createElement("div");
+            div.innerHTML = "<div class='message-chatbot container-message-user'><div><p>En général, à quels occasions buvez vous du vin ? Sélectionnez une étiquette ou répondez directement dans la zone de saisi</p></div><p class='date-message'>4 : 53 PM</p></div><div class='message-chatbot container-message-chatbot-alert'><div><p>En général, à quels occasions buvez vous du vin ? Sélectionnez une étiquette ou répondez directement dans la zone de saisi</p></div><p class='date-message'>4 : 53 PM</p></div><div div class='container-categorie-vin' ><div id='box-categorie-1' class='box-categorie-vin'><div style='background-image: url(src/produit/rose.png);'></div><p>Rosé</p><input type='checkbox' id='categorie-1' onchange='changeCouleur(1)'></div><div id='box-categorie-2' class='box-categorie-vin'><div style='background-image: url(src/produit/vin-blanc.png);'></div><p>Blanc</p><input type='checkbox' id='categorie-2' onchange='changeCouleur(2)'></div><div id='box-categorie-3' class='box-categorie-vin'><div style='background-image: url(src/produit/rouge.png);'></div><p>Rouge</p><input type='checkbox' id='categorie-3' onchange='changeCouleur(3)'></div></div ><div class='button-list-view'><div><p>Végétal</p></div><div><p>Fruité</p></div><div><p>Floral</p></div><div><p>Empyromatique</p></div><div><p>Epice aromate</p></div></div><div class='container-marque-vin'><div id='box-marque-1' class='box-marque-vin'><div style='background-image: url(src/marque/sainte-roseline.png);'></div><input type='checkbox' id='marque-1' onchange='changeMarque(1)'></div><div id='box-marque-2' class='box-marque-vin'><div style='background-image: url(src/marque/demoiselles.png);'></div><input type='checkbox' id='marque-2' onchange='changeMarque(2)'></div></div>";
+            document.getElementById("message-content-chatbot").appendChild(div);
+
+            document.getElementById('contenu-message').value = '';
+        }
+    });
+
+
+
+    //Bouton de catégorie du vin
+    function changeCouleur(i) {
+        if (document.getElementById('categorie-' + i).checked == false) {
+            document.getElementById('box-categorie-' + i).classList.remove('box-categorie-active');
+            document.getElementById('box-categorie-' + i).classList.add('box-categorie-vin');
+        } else {
+            document.getElementById('box-categorie-' + i).classList.add('box-categorie-active');
+            document.getElementById('box-categorie-' + i).classList.remove('box-categorie-vin');
+        }
+    }
+
+    //Bouton des marques
+    function changeMarque(i) {
+        if (document.getElementById('marque-' + i).checked == false) {
+            document.getElementById('box-marque-' + i).classList.remove('box-marque-active');
+            document.getElementById('box-marque-' + i).classList.add('box-marque-vin');
+        } else {
+            document.getElementById('box-marque-' + i).classList.add('box-marque-active');
+            document.getElementById('box-marque-' + i).classList.remove('box-marque-vin');
+        }
+    }
+
+    //Lancement du chatbot
+    function lancementBot() {
+        document.getElementById('message-content-chatbot').innerHTML = "<p class='datetime-chatbot'> Mercredi 13 oct</p><div class='message-chatbot container-message-chatbot'><div><p>En général, à quels occasions buvez vous du vin ? Sélectionnez une étiquette ou répondez directement <a>dans la zone de saisi</a></p></div><p class='date-message'>4 : 53 PM</p></div>";
+    }
+
+
+
+</script>
