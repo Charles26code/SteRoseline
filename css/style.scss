@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+//Les differentes variables couleurs
+$color_fond : #F8F8F8;
+
+$color_grey1 : #101010;
+$color_grey2 : #EFEFEF;
+$color_grey3 : #979797;
+$color_white : #FFFFFF;
+$color_principaly: #517AB2;
+
+//Les differentes variables font
+$font1: 'Montserrat', sans-serif;
+$font2: 'Oswald', sans-serif;
+
+
+// Si aucune valeur n'est précisée alors $justify vaut space-around
+@mixin flex($justify: space-around){
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: $justify;
+}
+
+
+//Déclaration des attributs de bases
+body{
+    margin:0;
+    background-color: $color_fond ;
+    position: relative;
+    height: max-content;
+}
+
+a{
+    text-decoration: none;
+    color: $color_grey1;
+}
+
+@import "scss/mainChatBot";

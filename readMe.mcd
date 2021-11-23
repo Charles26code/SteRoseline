@@ -1,0 +1,17 @@
+//Les diférents types de messages
+
+STRUCTURE : 
+
+<div class='message-chatbot container-message-chatbot'>
+    <div>
+        <p id='text-message' style='font-size:14px;'>
+            En général, à quels occasions buvez vous du vin ? Sélectionnez une étiquette ou répondez directement <a>dans la zone de saisi</a>
+        </p>
+    </div>
+    <p class='date-message'>4 : 53 PM</p>
+</div>
+
+LES CLASSES
+.container-message-chatbot --> pour un message du chatbot
+.container-message-user --> pour un message de l'utilisateur
+.container-message-alert --> pour un message d'alerte
