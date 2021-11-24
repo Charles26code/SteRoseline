@@ -224,6 +224,7 @@ section{
             }
             .message-content-chatbot{
                 max-height: 480px;
+                width: 100%;
 
                 position:absolute;
                 top:70px;
@@ -297,11 +298,17 @@ section{
                         padding: 15px;
                         border-radius: 10px;
                         box-sizing: content-box;
+                        width: min-content;
+                        max-width: 100%;
                         p{
                             margin: 0;
                             font-family: $font1;
                             font-weight:300;
-                            
+
+                            width: max-content;
+                            overflow-wrap: break-word;
+                            max-width: 100%;
+
                         }
                     }
                     .date-message{
@@ -310,10 +317,15 @@ section{
                         font-size: 11px;
                         font-weight:500;
                         color:$color_grey1; 
+                        span{
+                            font-size: 9px;
+                            font-weight:300;
+                        }
                     }
                 }
                 .container-message-chatbot{
-                    margin: 20px 15% 20px 5%;
+                    margin: 10px 15% 10px 5%;
+                    
                     div{
                         background-color: $color_grey2;
                         p{
@@ -326,7 +338,9 @@ section{
                     }
                 }
                 .container-message-user{
-                    margin: 20px 5% 20px 15%;
+                    margin: 10px 5% 10px 15%;
+                    @include flex(flex-end);
+                    flex-wrap: wrap;
                     div{
                         background-color: $color_grey1;
                         p{
@@ -336,6 +350,8 @@ section{
                     }
                     .date-message{
                         text-align: right;
+                        width: 100%;
+
                     }
                 }
                 .container-message-chatbot-alert{
@@ -886,11 +902,11 @@ section{
     @keyframes appear-message-chatbot{
         0% { 
             opacity: 0; 
-            margin-top:30px;  
+            margin-top:40px;  
         }
         100% {
             opacity: 1;
-            margin-top:0;  
+            margin-top:10px;  
         }
     }
 }

@@ -243,6 +243,7 @@ section:last-child {
 
 #main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot {
   max-height: 480px;
+  width: 100%;
   position: absolute;
   top: 70px;
   left: 0;
@@ -326,12 +327,21 @@ section:last-child {
   border-radius: 10px;
   -webkit-box-sizing: content-box;
           box-sizing: content-box;
+  width: -webkit-min-content;
+  width: -moz-min-content;
+  width: min-content;
+  max-width: 100%;
 }
 
 #main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot .message-chatbot div p {
   margin: 0;
   font-family: "Montserrat", sans-serif;
   font-weight: 300;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  overflow-wrap: break-word;
+  max-width: 100%;
 }
 
 #main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot .message-chatbot .date-message {
@@ -342,8 +352,13 @@ section:last-child {
   color: #101010;
 }
 
+#main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot .message-chatbot .date-message span {
+  font-size: 9px;
+  font-weight: 300;
+}
+
 #main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot .container-message-chatbot {
-  margin: 20px 15% 20px 5%;
+  margin: 10px 15% 10px 5%;
 }
 
 #main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot .container-message-chatbot div {
@@ -360,7 +375,16 @@ section:last-child {
 }
 
 #main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot .container-message-user {
-  margin: 20px 5% 20px 15%;
+  margin: 10px 5% 10px 15%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 #main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot .container-message-user div {
@@ -374,6 +398,7 @@ section:last-child {
 
 #main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot .container-message-user .date-message {
   text-align: right;
+  width: 100%;
 }
 
 #main-chatbot #container-chatbot .relative-chatbot .message-content-chatbot .container-message-chatbot-alert {
@@ -1074,22 +1099,22 @@ section:last-child {
 @-webkit-keyframes appear-message-chatbot {
   0% {
     opacity: 0;
-    margin-top: 30px;
+    margin-top: 40px;
   }
   100% {
     opacity: 1;
-    margin-top: 0;
+    margin-top: 10px;
   }
 }
 
 @keyframes appear-message-chatbot {
   0% {
     opacity: 0;
-    margin-top: 30px;
+    margin-top: 40px;
   }
   100% {
     opacity: 1;
-    margin-top: 0;
+    margin-top: 10px;
   }
 }
 /*# sourceMappingURL=style.css.map */
