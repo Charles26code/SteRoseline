@@ -1,6 +1,13 @@
 //fonction de recuperation de la première requete
 function firstRequest(request) {
 
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "ajax_call.php");
+    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhttp.send('request=' + encodeURIComponent(request));
+
+
+
     //Définition des tableaux de noms
     let searchWine = ['vin', 'vain', 'alcool', 'rose', 'rosé', 'rouge', 'blanc', 'blan'];
     let searchArome = ['gout', 'gou', 'goud', 'arome', 'arrome', 'odeur', 'texture'];

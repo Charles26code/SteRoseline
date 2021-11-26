@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS ChatRequest;
 
 CREATE TABLE ChatRequest (
     idChatRequest int NOT NULL AUTO_INCREMENT,
-    dateFirstRequest datetime NOT NULL,
+    dateFirstRequest datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     firstRequest varchar(255) NOT NULL,
     idUser int,
 	PRIMARY KEY (idChatRequest)

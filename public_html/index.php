@@ -1,4 +1,5 @@
 <?
+  phpinfo();
 ?>
 <!DOCTYPE html>
 <html>
