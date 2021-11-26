@@ -335,6 +335,7 @@ document.getElementById("button-submit").addEventListener("click", function () {
                 for (let i = 1; i < 4; i++) {
                     if (document.getElementById('categorie-' + i).checked == true) {
                         answerUser["vin"] = answerUser["vin"] + ' vin ' + document.getElementById('categorie-' + i).value;
+
                     }
                 }
             }
@@ -366,8 +367,12 @@ document.getElementById("button-submit").addEventListener("click", function () {
             }
             if (QMSortie[etatlancement - 2] == 8) {
                 answerUser["prix"] = answerUser["prix"] + ' prix ' + document.getElementById('contenu-message').value;
-            }
+                etatlancement++;
 
+            }
+            if (QMSortie.length == (etatlancement - 1)) {
+                etatlancement = 9;
+            }
             if (QMSortie[etatlancement - 1] == 1) {
                 var message1 = document.createElement("div");
                 message1.className = "message-chatbot container-message-chatbot";
@@ -426,6 +431,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
                     conteneurMarque.className = "container-marque-vin";
                     conteneurMarque.innerHTML = "<div id='box-marque-1' class='box-marque-vin'><div style='background-image: url(src/marque/sainte-roseline.png);'></div><input type='checkbox' id='marque-1' value='Domaine Sainte Roseline' onchange='changeMarque(1)'></div><div id='box-marque-2' class='box-marque-vin'><div style='background-image: url(src/marque/demoiselles.png);'></div><input type='checkbox' value='Chateau des Demoiselles' id='marque-2' onchange='changeMarque(2)'></div>";
                     document.getElementById("message-content-chatbot").appendChild(conteneurMarque);
+
+                    element = document.getElementById('message-content-chatbot');
+                    element.scrollTop = element.scrollHeight;
                 }, 1000);
                 etatlancement++;
             } else if (QMSortie[etatlancement - 1] == 7) {
@@ -441,6 +449,28 @@ document.getElementById("button-submit").addEventListener("click", function () {
                 message1.innerHTML = "<div><p id='text-message' style='font-size:14px;'>Quel prix souhaitez-vous mettre ?</p></div><p class='date-message'><span>envoyé à </span>" + ladate.getHours() + " : " + ladate.getMinutes() + "</p>";
                 document.getElementById("message-content-chatbot").appendChild(message1);
                 etatlancement++;
+
+            }
+
+
+            if (etatlancement >= 9) {
+                retour = 'Je vois que vous recherchez un vin  ' + answerUser["vin"] + ', avec un gout de ' + answerUser["arome"] + ', pour accompagner ' + answerUser["plat"] + ', pour une occasion comme ' + answerUser["occasion"] + ', provenant du cepage de ' + answerUser["cepage"] + ', avec la marque ' + answerUser["marque"] + ', datant de ' + answerUser["date"] + ', pour un budget de ' + answerUser["prix"];
+
+                var ladate = new Date();
+                var finChat = document.createElement("div");
+                finChat.className = "message-chatbot container-message-chatbot";
+                finChat.innerHTML = "<div><p id='text-message' style='font-size:14px;'>" + retour + "</p></div><p class='date-message'><span>envoyé à </span>" + ladate.getHours() + " : " + ladate.getMinutes() + "</p>";
+                document.getElementById("message-content-chatbot").appendChild(finChat);
+
+                setTimeout(function () {
+                    var finChat = document.createElement("div");
+                    finChat.className = "message-chatbot container-message-chatbot";
+                    finChat.innerHTML = "<div><p id='text-message' style='font-size:14px;'>J'ai maintenant besoin de quelques instants pour trouver un résultat ! </p></div><p class='date-message'><span>envoyé à </span>" + ladate.getHours() + " : " + ladate.getMinutes() + "</p>";
+                    document.getElementById("message-content-chatbot").appendChild(finChat);
+                    element = document.getElementById('message-content-chatbot');
+                    element.scrollTop = element.scrollHeight;
+                }, 1000);
+
             }
         }
 
