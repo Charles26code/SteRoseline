@@ -88,7 +88,7 @@
 
         $query = $pdo->prepare("INSERT INTO vin.GrapeVarietyRequested (idChatRequest, idGrapeVariety) 
                 SELECT (:idChatRequest, idGrapeVariety) FROM vin.GrapeVariety 
-                WHERE grapeVariety = :grapeVariety");
+                WHERE lower(grapeVariety) = lower(:grapeVariety)");
         $query->bindParam(':idChatRequest', $idChatRequest);
         $query->bindParam(':grapeVariety', $grapeVariety);
 
