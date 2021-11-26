@@ -1,15 +1,18 @@
 //fonction de recuperation de la première requete
+let idChatRequest = null;
+
 function firstRequest(request) {
   $.ajax({
-    url   : 'ajax_call.php',
-    method: 'POST',
-    data  :
+    url    : 'ajax_call.php',
+    method : 'POST',
+    data   :
       {
+        method: "firsRequest",
         request: request
       },
-      success: function (response) {
-        //TODO récupère idChatRequest
-      }
+    success: function (response) {
+      idChatRequest = response;
+    }
   });
 
 
@@ -446,6 +449,18 @@ document.getElementById("button-submit").addEventListener("click", function () {
       }
       if (QMSortie[etatlancement - 2] == 3) {
         answerUser["plat"] = answerUser["plat"] + ' plat ' + document.getElementById('contenu-message').value;
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method: "dishRequested",
+              idChatRequest: idChatRequest,
+              dish: document.getElementById('contenu-message').value
+            },
+          success: function (response) {
+          }
+        });
       }
       if (QMSortie[etatlancement - 2] == 4) {
         answerUser["occasion"] = answerUser["occasion"] + ' occasion ' + document.getElementById('contenu-message').value;
