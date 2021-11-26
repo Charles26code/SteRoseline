@@ -47,7 +47,6 @@
         $dish = $_POST['dish'];
 
         $pdo = new PDO(DATABASE_URL, USER, PASSORD);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
         $query = $pdo->prepare("INSERT INTO vin.DishRequested (idChatRequest, dish) VALUES (:idChatRequest, :dish)");
         $query->bindParam(':idChatRequest', $idChatRequest);
@@ -65,7 +64,6 @@
         $aromas = $_POST['aromas'];
 
         $pdo = new PDO(DATABASE_URL, USER, PASSORD);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
         foreach ($aromas as $key => $aroma) {
           $aromas[$key] = "($idChatRequest, $aroma)";
@@ -84,11 +82,10 @@
         $grapeVariety = $_POST['grapeVariety'];
 
         $pdo = new PDO(DATABASE_URL, USER, PASSORD);
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 
         $query = $pdo->prepare("INSERT INTO vin.GrapeVarietyRequested (idChatRequest, idGrapeVariety) 
-                SELECT (:idChatRequest, idGrapeVariety) FROM vin.GrapeVariety 
-                WHERE lower(grapeVariety) = lower(:grapeVariety)");
+                SELECT :idChatRequest, idGrapeVariety FROM vin.GrapeVariety 
+                WHERE lower(:grapeVariety) like CONCAT('%', lower(grapeVariety), '%')");
         $query->bindParam(':idChatRequest', $idChatRequest);
         $query->bindParam(':grapeVariety', $grapeVariety);
 

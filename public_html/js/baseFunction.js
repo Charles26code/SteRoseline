@@ -500,9 +500,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
           method : 'POST',
           data   :
             {
-              method: "grapVarietyRequested",
+              method: "grapeVarietyRequested",
               idChatRequest: idChatRequest,
-              grapVariety: document.getElementById('contenu-message').value
+              grapeVariety: document.getElementById('contenu-message').value
             },
           success: function (response) {
           }

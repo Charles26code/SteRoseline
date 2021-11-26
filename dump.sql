@@ -133,7 +133,7 @@ VALUES
 ('Rouge');
 
 INSERT INTO Aroma
-(categorie)
+(aroma)
 VALUES 
 ('Végétal'),
 ('Fruité'),
