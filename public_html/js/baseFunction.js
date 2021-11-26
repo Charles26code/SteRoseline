@@ -433,19 +433,47 @@ document.getElementById("button-submit").addEventListener("click", function () {
     if (etatlancement > 0) {
       QMSortie = questionManquante.split(",");
       if (QMSortie[etatlancement - 2] == 1) {
+        let categories = [];
         for (let i = 1; i < 4; i++) {
           if (document.getElementById('categorie-' + i).checked == true) {
+            categories.push(i);
             answerUser["vin"] = answerUser["vin"] + ' vin ' + document.getElementById('categorie-' + i).value;
 
           }
         }
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method: "categoriesRequested",
+              idChatRequest: idChatRequest,
+              categories: categories
+            },
+          success: function (response) {
+          }
+        });
       }
       if (QMSortie[etatlancement - 2] == 2) {
+        let aromas = [];
         for (let i = 1; i < 6; i++) {
           if (document.getElementById('arome-' + i).checked == true) {
+            aromas.push(i);
             answerUser["arome"] = answerUser["arome"] + ' arome ' + document.getElementById('arome-' + i).value;
           }
         }
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method: "aromasRequested",
+              idChatRequest: idChatRequest,
+              aromas: aromas
+            },
+          success: function (response) {
+          }
+        });
       }
       if (QMSortie[etatlancement - 2] == 3) {
         answerUser["plat"] = answerUser["plat"] + ' plat ' + document.getElementById('contenu-message').value;
@@ -467,6 +495,18 @@ document.getElementById("button-submit").addEventListener("click", function () {
       }
       if (QMSortie[etatlancement - 2] == 5) {
         answerUser["cepage"] = answerUser["cepage"] + ' cepage ' + document.getElementById('contenu-message').value;
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method: "grapVarietyRequested",
+              idChatRequest: idChatRequest,
+              grapVariety: document.getElementById('contenu-message').value
+            },
+          success: function (response) {
+          }
+        });
       }
       if (QMSortie[etatlancement - 2] == 6) {
         for (let i = 1; i < 3; i++) {
@@ -477,6 +517,18 @@ document.getElementById("button-submit").addEventListener("click", function () {
       }
       if (QMSortie[etatlancement - 2] == 7) {
         answerUser["date"] = answerUser["date"] + ' date ' + document.getElementById('contenu-message').value;
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method: "yearRequested",
+              idChatRequest: idChatRequest,
+              year: document.getElementById('contenu-message').value
+            },
+          success: function (response) {
+          }
+        });
       }
       if (QMSortie[etatlancement - 2] == 8) {
         answerUser["prix"] = answerUser["prix"] + ' prix ' + document.getElementById('contenu-message').value;

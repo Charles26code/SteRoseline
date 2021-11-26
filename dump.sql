@@ -124,3 +124,32 @@ FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
 ALTER TABLE PersonnalInformation
 ADD CONSTRAINT FK_PersonnalInformation_ChatRequest
 FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
+
+INSERT INTO Categorie
+(categorie)
+VALUES 
+('Rosé'),
+('Blanc'),
+('Rouge');
+
+INSERT INTO Aroma
+(categorie)
+VALUES 
+('Végétal'),
+('Fruité'),
+('Floral'),
+('Empyromatique'),
+('Epice aromate');
+
+INSERT INTO GrapeVariety
+(grapeVariety)
+VALUES
+('Mourvèdre'),
+('Syrah'),
+('Cabernet sauvignon'),
+('Rolle'),
+('Cinsault'),
+('Grenache noir'),
+('Tibouren'),
+('Sémillon'),
+('Carignan');
