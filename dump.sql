@@ -10,6 +10,9 @@ DROP TABLE IF EXISTS GrapeVarietyRequested;
 DROP TABLE IF EXISTS GrapeVariety;
 DROP TABLE IF EXISTS DishRequested;
 DROP TABLE IF EXISTS PersonnalInformation;
+DROP TABLE IF EXISTS OpportunityRequested;
+DROP TABLE IF EXISTS MarkRequested;
+DROP TABLE IF EXISTS Mark;
 DROP TABLE IF EXISTS ChatRequest;
 
 CREATE TABLE ChatRequest (
@@ -75,16 +78,16 @@ CREATE TABLE PriceRequested (
 	PRIMARY KEY (idPriceRequested)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE CategorieRequested (
-    idCategorie int NOT NULL,
+CREATE TABLE CategoryRequested (
+    idCategory int NOT NULL,
     idChatRequest int NOT NULL,
-	PRIMARY KEY (idCategorie, idChatRequest)
+	PRIMARY KEY (idCategory, idChatRequest)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Categorie (
-    idCategorie int NOT NULL AUTO_INCREMENT,
-    categorie varchar(255) NOT NULL,
-	PRIMARY KEY (idCategorie)
+CREATE TABLE Category (
+    idCategory int NOT NULL AUTO_INCREMENT,
+    category varchar(255) NOT NULL,
+	PRIMARY KEY (idCategory)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE RefinedQuestionAnswered (
@@ -100,11 +103,30 @@ CREATE TABLE RefinedQuestion (
 	PRIMARY KEY (idRefinedQuestion)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE OpportunityRequested (
+    idOpportunityRequested int NOT NULL AUTO_INCREMENT,
+    opportunity varchar(255) NOT NULL,
+	idChatRequest int NOT NULL,
+	PRIMARY KEY (idOpportunityRequested)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE MarkRequested (
+    idMark int NOT NULL AUTO_INCREMENT,
+    idChatRequest int NOT NULL,
+	PRIMARY KEY (idMark, idChatRequest)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE Mark (
+    idMark int NOT NULL AUTO_INCREMENT,
+    mark varchar(255) NOT NULL,
+	PRIMARY KEY (idMark)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 ALTER TABLE RefinedQuestionAnswered
 ADD CONSTRAINT FK_RefinedQuestionAnswered_ChatRequest
 FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
-ALTER TABLE CategorieRequested
-ADD CONSTRAINT FK_CategorieRequested_ChatRequest
+ALTER TABLE CategoryRequested
+ADD CONSTRAINT FK_CategoryRequested_ChatRequest
 FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
 ALTER TABLE PriceRequested
 ADD CONSTRAINT FK_PriceRequested_ChatRequest
@@ -124,17 +146,46 @@ FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
 ALTER TABLE PersonnalInformation
 ADD CONSTRAINT FK_PersonnalInformation_ChatRequest
 FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
+ALTER TABLE OpportunityRequested
+ADD CONSTRAINT FK_OpportunityRequested_ChatRequest
+FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
+ALTER TABLE MarkRequested
+ADD CONSTRAINT FK_MarkRequested_ChatRequest
+FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
+ALTER TABLE Mark
+ADD CONSTRAINT FK_Mark_ChatRequest
+FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
 
-INSERT INTO Categorie
-(categorie)
-VALUES 
+ALTER TABLE MarkRequested
+ADD CONSTRAINT FK_MarkRequested_Mark
+FOREIGN KEY (idMark) REFERENCES Mark(idMark);
+
+ALTER TABLE AromaRequested
+ADD CONSTRAINT FK_AromaRequested_Aroma
+FOREIGN KEY (idAroma) REFERENCES Aroma(idAroma);
+
+ALTER TABLE GrapeVarietyRequested
+ADD CONSTRAINT FK_GrapeVarietyRequested_GrapeVarietyRequested
+FOREIGN KEY (idGrapeVariety) REFERENCES GrapeVariety(idGrapeVariety);
+
+ALTER TABLE RefinedQuestionAnswered
+ADD CONSTRAINT FK_RefinedQuestionAnswered_RefinedQuestion
+FOREIGN KEY (idRefinedQuestion) REFERENCES RefinedQuestion(idRefinedQuestion);
+
+ALTER TABLE CategoryRequested
+ADD CONSTRAINT FK_CategoryRequested_Category
+FOREIGN KEY (idCategory) REFERENCES Category(idCategory);
+
+INSERT INTO Category
+(category)
+VALUES
 ('Rosé'),
 ('Blanc'),
 ('Rouge');
 
 INSERT INTO Aroma
 (aroma)
-VALUES 
+VALUES
 ('Végétal'),
 ('Fruité'),
 ('Floral'),
@@ -153,3 +204,9 @@ VALUES
 ('Tibouren'),
 ('Sémillon'),
 ('Carignan');
+
+INSERT INTO Mark
+(mark)
+VALUES
+('Château St Roseline'),
+('Château des demoiselles');

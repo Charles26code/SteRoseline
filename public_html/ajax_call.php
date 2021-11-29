@@ -34,7 +34,7 @@
           $categories[$key] = "($idChatRequest, $category)";
         }
         $sql_categories = implode(',', $categories);
-        $sql = "INSERT INTO vin.CategorieRequested (idChatRequest, idCategorie) VALUES $sql_categories";
+        $sql = "INSERT INTO vin.CategoryRequested (idChatRequest, idCategory) VALUES $sql_categories";
         $pdo->exec($sql);
         echo 1;
       } else {
@@ -106,6 +106,60 @@
         $query = $pdo->prepare("INSERT INTO vin.YearRequested (idChatRequest, year) VALUES (:idChatRequest, :year)");
         $query->bindParam(':idChatRequest', $idChatRequest);
         $query->bindParam(':year', $year);
+
+        $query->execute();
+        echo 1;
+      } else {
+        echo 0;
+      }
+      break;
+    case 'opportunityRequested':
+      if (isset($_POST['idChatRequest'], $_POST['opportunity'])) {
+        $idChatRequest = $_POST['idChatRequest'];
+        $opportunity = $_POST['opportunity'];
+
+        $pdo = new PDO(DATABASE_URL, USER, PASSORD);
+
+        $query = $pdo->prepare("INSERT INTO vin.OpportunityRequested (idChatRequest, opportunity) VALUES (:idChatRequest, :opportunity)");
+        $query->bindParam(':idChatRequest', $idChatRequest);
+        $query->bindParam(':opportunity', $opportunity);
+
+        $query->execute();
+        echo 1;
+      } else {
+        echo 0;
+      }
+      break;
+    case 'marksRequested':
+      if (isset($_POST['idChatRequest'], $_POST['marks'])) {
+        $idChatRequest = $_POST['idChatRequest'];
+        $marks = $_POST['marks'];
+
+        $pdo = new PDO(DATABASE_URL, USER, PASSORD);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+
+        foreach ($marks as $key => $mark) {
+          $marks[$key] = "($idChatRequest, $mark)";
+        }
+        $sql_marks = implode(',', $marks);
+        $sql = "INSERT INTO vin.MarkRequested (idChatRequest, idMark) VALUES $sql_marks";
+        $pdo->exec($sql);
+        echo 1;
+      } else {
+        echo 0;
+      }
+      break;
+    case 'priceRequested':
+      if (isset($_POST['idChatRequest'], $_POST['price'])) {
+        $idChatRequest = $_POST['idChatRequest'];
+        $price = $_POST['price'];
+
+        $pdo = new PDO(DATABASE_URL, USER, PASSORD);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+
+        $query = $pdo->prepare("INSERT INTO vin.PriceRequested (idChatRequest, price) VALUES (:idChatRequest, :price)");
+        $query->bindParam(':idChatRequest', $idChatRequest);
+        $query->bindParam(':price', $price);
 
         $query->execute();
         echo 1;

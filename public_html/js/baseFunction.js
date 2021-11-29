@@ -82,6 +82,7 @@ function firstRequest(request) {
 
   ArrayRequest = request.split(" ");
 
+
   //recherche du vin
   for (let i = 0; i < ArrayRequest.length; i++) {
     for (let j = 0; j < ArrayRequest.length; j++) {
@@ -127,7 +128,7 @@ function firstRequest(request) {
       }
     }
   }
-
+  let dish = "";
   //recherche des plat
   for (let i = 0; i < ArrayRequest.length; i++) {
     for (let j = 0; j < ArrayRequest.length; j++) {
@@ -146,6 +147,7 @@ function firstRequest(request) {
             } else if (answerUser["plat"] != motSearch[k]) {
               answerUser["plat"] = answerUser["plat"] + ", " + motSearch[k];
             }
+            dish += motSearch[k];
           }
 
         }
@@ -153,6 +155,7 @@ function firstRequest(request) {
     }
   }
 
+  let opportunity = ""
   //recherche des occasion
   for (let i = 0; i < ArrayRequest.length; i++) {
     for (let j = 0; j < ArrayRequest.length; j++) {
@@ -171,12 +174,14 @@ function firstRequest(request) {
             } else if (answerUser["occasion"] != motSearch[k]) {
               answerUser["occasion"] = answerUser["occasion"] + ", " + motSearch[k];
             }
+            opportunity += motSearch[k];
           }
 
         }
       }
     }
   }
+
 
   //recherche des cepage
   for (let i = 0; i < ArrayRequest.length; i++) {
@@ -230,15 +235,16 @@ function firstRequest(request) {
     }
   }
 
+  let year = "";
   //recherche des date
   for (let i = 0; i < ArrayRequest.length; i++) {
     for (let j = 0; j < ArrayRequest.length; j++) {
       if (!isNaN(parseFloat(ArrayRequest[i]))) {
         if (ArrayRequest[i - 1] == searchDate[j] || ArrayRequest[i - 2] == searchDate[j]) {
-          alert(ArrayRequest[i - 1] + ' ' + searchPrix[j]);
+          alert(ArrayRequest[i - 1] + ' ' + searchDate[j]);
           if (answerUser["date"] == "") {
             answerUser["date"] = ArrayRequest[i];
-
+            year = ArrayRequest[i]
           } else {
             splitSizeDate = answerUser["date"].split(", ");
             ajoutdate     = 0;
@@ -256,6 +262,7 @@ function firstRequest(request) {
     }
   }
 
+  let price = "";
   //recherche des prix
   for (let i = 0; i < ArrayRequest.length; i++) {
     for (let j = 0; j < ArrayRequest.length; j++) {
@@ -264,7 +271,7 @@ function firstRequest(request) {
 
           if (answerUser["prix"] == "") {
             answerUser["prix"] = ArrayRequest[i];
-
+            price = ArrayRequest[i];
           } else {
             splitSizePrix = answerUser["prix"].split(", ");
             ajout         = 0;
@@ -307,6 +314,18 @@ function firstRequest(request) {
 
   if (answerUser["plat"] != "") {
     retour = retour + ', pour accompagner ' + answerUser["plat"];
+    $.ajax({
+      url    : 'ajax_call.php',
+      method : 'POST',
+      data   :
+        {
+          method: "dishRequested",
+          idChatRequest: idChatRequest,
+          dish: dish
+        },
+      success: function (response) {
+      }
+    });
   } else {
     if (questionManquante == '') {
       questionManquante = '3';
@@ -316,6 +335,18 @@ function firstRequest(request) {
   }
   if (answerUser["occasion"] != "") {
     retour = retour + ', pour une occasion comme ' + answerUser["occasion"];
+    $.ajax({
+      url    : 'ajax_call.php',
+      method : 'POST',
+      data   :
+        {
+          method: "opportunityRequested",
+          idChatRequest: idChatRequest,
+          opportunity: opportunity
+        },
+      success: function (response) {
+      }
+    });
   } else {
     if (questionManquante == '') {
       questionManquante = '4';
@@ -344,6 +375,18 @@ function firstRequest(request) {
   }
 
   if (answerUser["date"] != "") {
+    $.ajax({
+      url    : 'ajax_call.php',
+      method : 'POST',
+      data   :
+        {
+          method: "yearRequested",
+          idChatRequest: idChatRequest,
+          year: year
+        },
+      success: function (response) {
+      }
+    });
     retour = retour + ', datant de ' + answerUser["date"];
   } else {
     if (questionManquante == '') {
@@ -353,6 +396,18 @@ function firstRequest(request) {
     }
   }
   if (answerUser["prix"] != "") {
+    $.ajax({
+      url    : 'ajax_call.php',
+      method : 'POST',
+      data   :
+        {
+          method: "priceRequested",
+          idChatRequest: idChatRequest,
+          price: price
+        },
+      success: function (response) {
+      }
+    });
     retour = retour + ', pour un budget de ' + answerUser["prix"];
   } else {
     if (questionManquante == '') {
@@ -492,6 +547,18 @@ document.getElementById("button-submit").addEventListener("click", function () {
       }
       if (QMSortie[etatlancement - 2] == 4) {
         answerUser["occasion"] = answerUser["occasion"] + ' occasion ' + document.getElementById('contenu-message').value;
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method: "opportunityRequested",
+              idChatRequest: idChatRequest,
+              opportunity: document.getElementById('contenu-message').value
+            },
+          success: function (response) {
+          }
+        });
       }
       if (QMSortie[etatlancement - 2] == 5) {
         answerUser["cepage"] = answerUser["cepage"] + ' cepage ' + document.getElementById('contenu-message').value;
@@ -509,11 +576,25 @@ document.getElementById("button-submit").addEventListener("click", function () {
         });
       }
       if (QMSortie[etatlancement - 2] == 6) {
+        let marks = [];
         for (let i = 1; i < 3; i++) {
           if (document.getElementById('marque-' + i).checked == true) {
+            marks.push(i);
             answerUser["marque"] = answerUser["marque"] + ' marque ' + document.getElementById('marque-' + i).value;
           }
         }
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method: "marksRequested",
+              idChatRequest: idChatRequest,
+              marks: marks
+            },
+          success: function (response) {
+          }
+        });
       }
       if (QMSortie[etatlancement - 2] == 7) {
         answerUser["date"] = answerUser["date"] + ' date ' + document.getElementById('contenu-message').value;
@@ -533,7 +614,18 @@ document.getElementById("button-submit").addEventListener("click", function () {
       if (QMSortie[etatlancement - 2] == 8) {
         answerUser["prix"] = answerUser["prix"] + ' prix ' + document.getElementById('contenu-message').value;
         etatlancement++;
-
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method: "priceRequested",
+              idChatRequest: idChatRequest,
+              price: document.getElementById('contenu-message').value
+            },
+          success: function (response) {
+          }
+        });
       }
       if (QMSortie.length == (etatlancement - 1)) {
         etatlancement = 9;
