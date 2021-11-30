@@ -152,9 +152,6 @@ FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
 ALTER TABLE MarkRequested
 ADD CONSTRAINT FK_MarkRequested_ChatRequest
 FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
-ALTER TABLE Mark
-ADD CONSTRAINT FK_Mark_ChatRequest
-FOREIGN KEY (idChatRequest) REFERENCES ChatRequest(idChatRequest);
 
 ALTER TABLE MarkRequested
 ADD CONSTRAINT FK_MarkRequested_Mark

@@ -83,14 +83,14 @@ function firstRequest(request) {
   ArrayRequest = request.split(" ");
 
 
+  let categories = [];
   //recherche du vin
   for (let i = 0; i < ArrayRequest.length; i++) {
     for (let j = 0; j < ArrayRequest.length; j++) {
       let motSearch = [
-        'rouge',
+        'rosé',
         'blanc',
-        'rose',
-        'rosé'];
+        'rouge'];
       if (ArrayRequest[i] == searchWine[j]) {
         for (let k = 0; k < motSearch.length; k++) {
           if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
@@ -99,21 +99,23 @@ function firstRequest(request) {
             } else if (answerUser["vin"] != motSearch[k]) {
               answerUser["vin"] = answerUser["vin"] + ", " + motSearch[k];
             }
+            categories.push(k + 1);
           }
         }
       }
     }
   }
 
+  let aromas = []
   //recherche des aromes
   for (let i = 0; i < ArrayRequest.length; i++) {
     for (let j = 0; j < ArrayRequest.length; j++) {
       let motSearch = [
         'végétal',
-        'épicé',
-        'boisé',
+        'fruité',
         'floral',
-        'fruité'];
+        'Empyromatique',
+        'épicé',];
       if (ArrayRequest[i] == searchArome[j]) {
         for (let k = 0; k < motSearch.length; k++) {
           if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
@@ -122,8 +124,8 @@ function firstRequest(request) {
             } else if (answerUser["arome"] != motSearch[k]) {
               answerUser["arome"] = answerUser["arome"] + ", " + motSearch[k];
             }
+            aromas.push(k + 1);
           }
-
         }
       }
     }
@@ -294,6 +296,18 @@ function firstRequest(request) {
 
   if (answerUser["vin"] != "") {
     retour = retour + ' ' + answerUser["vin"];
+    $.ajax({
+      url    : 'ajax_call.php',
+      method : 'POST',
+      data   :
+        {
+          method: "categoriesRequested",
+          idChatRequest: idChatRequest,
+          categories: categories
+        },
+      success: function (response) {
+      }
+    });
   } else {
     if (questionManquante == '') {
       questionManquante = '1';
@@ -304,6 +318,18 @@ function firstRequest(request) {
 
   if (answerUser["arome"] != "") {
     retour = retour + ', avec un gout de ' + answerUser["arome"];
+    $.ajax({
+      url    : 'ajax_call.php',
+      method : 'POST',
+      data   :
+        {
+          method: "aromasRequested",
+          idChatRequest: idChatRequest,
+          aromas: aromas
+        },
+      success: function (response) {
+      }
+    });
   } else {
     if (questionManquante == '') {
       questionManquante = '2';
