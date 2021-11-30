@@ -7,454 +7,457 @@ function firstRequest(request) {
     method : 'POST',
     data   :
       {
-        method: "firsRequest",
+        method : "firsRequest",
         request: request
       },
     success: function (response) {
       idChatRequest = response;
+
+
+      //Définition des tableaux de noms
+      let searchWine     = [
+        'vin',
+        'vain',
+        'alcool',
+        'rose',
+        'rosé',
+        'rouge',
+        'blanc',
+        'blan'];
+      let searchArome    = [
+        'gout',
+        'gou',
+        'goud',
+        'arome',
+        'arrome',
+        'odeur',
+        'texture'];
+      let searchPlat     = [
+        'mangé',
+        'manger',
+        'déguster',
+        'deguster',
+        'degusté',
+        'deguste',
+        'plat'];
+      let searchOccasion = [
+        'occasion',
+        'compagnie'];
+      let searchCepage   = [
+        'cepage',
+        'varite',
+        'varieté'];
+      let searchMarque   = [
+        'domaine',
+        'chateau',
+        'sainte',
+        'marque'];
+      let searchDate     = [
+        'datant',
+        'agé',
+        'age'];
+      let searchPrix     = [
+        'entre',
+        'coutant',
+        '€'];
+
+      let motEnTrop = [
+        'en',
+        'de',
+        'avec',
+        'un',
+        'pour'];
+      answerUser    = {
+        "vin"     : "",
+        "arome"   : "",
+        "plat"    : "",
+        "occasion": "",
+        "cepage"  : "",
+        "marque"  : "",
+        "date"    : "",
+        "prix"    : ""
+      };
+
+      ArrayRequest = request.split(" ");
+
+
+      let categories = [];
+      //recherche du vin
+      for (let i = 0; i < ArrayRequest.length; i++) {
+        for (let j = 0; j < ArrayRequest.length; j++) {
+          let motSearch = [
+            'rosé',
+            'blanc',
+            'rouge'];
+          if (ArrayRequest[i] == searchWine[j]) {
+            for (let k = 0; k < motSearch.length; k++) {
+              if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
+                if (answerUser["vin"] == "") {
+                  answerUser["vin"] = motSearch[k];
+                  categories.push(k + 1);
+                } else if (answerUser["vin"] != motSearch[k]) {
+                  answerUser["vin"] = answerUser["vin"] + ", " + motSearch[k];
+                  categories.push(k + 1);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      let aromas = [];
+      //recherche des aromes
+      for (let i = 0; i < ArrayRequest.length; i++) {
+        for (let j = 0; j < ArrayRequest.length; j++) {
+          let motSearch = [
+            'végétal',
+            'fruité',
+            'floral',
+            'Empyromatique',
+            'épicé'];
+          if (ArrayRequest[i] == searchArome[j]) {
+            for (let k = 0; k < motSearch.length; k++) {
+              if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
+                if (answerUser["arome"] == "") {
+                  answerUser["arome"] = motSearch[k];
+                  aromas.push(k + 1);
+                } else if (answerUser["arome"] != motSearch[k]) {
+                  answerUser["arome"] = answerUser["arome"] + ", " + motSearch[k];
+                  aromas.push(k + 1);
+                }
+              }
+            }
+          }
+        }
+      }
+      let dish = "";
+      //recherche des plat
+      for (let i = 0; i < ArrayRequest.length; i++) {
+        for (let j = 0; j < ArrayRequest.length; j++) {
+          let motSearch = [
+            'barbecue',
+            'fromages',
+            'viande',
+            'poisson',
+            'fruits de mer',
+            'dessert'];
+          if (ArrayRequest[i] == searchPlat[j]) {
+            for (let k = 0; k < motSearch.length; k++) {
+              if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
+                if (answerUser["plat"] == "") {
+                  answerUser["plat"] = motSearch[k];
+                  dish += motSearch[k];
+                } else if (answerUser["plat"] != motSearch[k]) {
+                  answerUser["plat"] = answerUser["plat"] + ", " + motSearch[k];
+                  dish += motSearch[k];
+                }
+              }
+
+            }
+          }
+        }
+      }
+
+      let opportunity = "";
+      //recherche des occasion
+      for (let i = 0; i < ArrayRequest.length; i++) {
+        for (let j = 0; j < ArrayRequest.length; j++) {
+          let motSearch = [
+            'amis',
+            'repas',
+            'famille',
+            'grand',
+            'soir',
+            'soirée'];
+          if (ArrayRequest[i] == searchOccasion[j]) {
+            for (let k = 0; k < motSearch.length; k++) {
+              if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
+                if (answerUser["occasion"] == "") {
+                  answerUser["occasion"] = motSearch[k];
+                  opportunity += motSearch[k];
+                } else if (answerUser["occasion"] != motSearch[k]) {
+                  answerUser["occasion"] = answerUser["occasion"] + ", " + motSearch[k];
+                  opportunity += motSearch[k];
+                }
+              }
+
+            }
+          }
+        }
+      }
+
+
+      //recherche des cepage
+      for (let i = 0; i < ArrayRequest.length; i++) {
+        for (let j = 0; j < ArrayRequest.length; j++) {
+          let motSearch = [
+            'Mourvèdre',
+            'Syrah',
+            'Cabernet sauvignon',
+            'Rolle',
+            'Cinsault',
+            'Grenache noir',
+            'Tibouren',
+            'Sémillon',
+            'Carignan'];
+          if (ArrayRequest[i] == searchCepage[j]) {
+            for (let k = 0; k < motSearch.length; k++) {
+              if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
+                if (answerUser["cepage"] == "") {
+                  answerUser["cepage"] = motSearch[k];
+                } else if (answerUser["cepage"] != motSearch[k]) {
+                  answerUser["cepage"] = answerUser["cepage"] + ", " + motSearch[k];
+                }
+              }
+
+            }
+          }
+        }
+      }
+
+      //recherche des marque
+      for (let i = 0; i < ArrayRequest.length; i++) {
+        for (let j = 0; j < ArrayRequest.length; j++) {
+          let motSearch = [
+            'Domaine',
+            'Sainte',
+            'Roseline',
+            'Chateau',
+            'Demoiselles'];
+          if (ArrayRequest[i] == searchMarque[j]) {
+            for (let k = 0; k < motSearch.length; k++) {
+              if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
+                if (answerUser["marque"] == "") {
+                  answerUser["marque"] = motSearch[k];
+                } else if (answerUser["marque"] != motSearch[k]) {
+                  answerUser["marque"] = answerUser["marque"] + ", " + motSearch[k];
+                }
+              }
+
+            }
+          }
+        }
+      }
+
+      let year = "";
+      //recherche des date
+      for (let i = 0; i < ArrayRequest.length; i++) {
+        for (let j = 0; j < ArrayRequest.length; j++) {
+          if (!isNaN(parseFloat(ArrayRequest[i]))) {
+            if (ArrayRequest[i - 1] == searchDate[j] || ArrayRequest[i - 2] == searchDate[j]) {
+              alert(ArrayRequest[i - 1] + ' ' + searchDate[j]);
+              if (answerUser["date"] == "") {
+                answerUser["date"] = ArrayRequest[i];
+                year               = ArrayRequest[i];
+              } else {
+                splitSizeDate = answerUser["date"].split(", ");
+                ajoutdate     = 0;
+                for (let k = 0; k < splitSizeDate.length; k++) {
+                  if (splitSizeDate[k] == ArrayRequest[i]) {
+                    ajoutdate = 1;
+                  }
+                }
+                if (ajoutdate == 0) {
+                  answerUser["date"] = answerUser["date"] + ", " + ArrayRequest[i];
+                }
+              }
+            }
+          }
+        }
+      }
+
+      let price = "";
+      //recherche des prix
+      for (let i = 0; i < ArrayRequest.length; i++) {
+        for (let j = 0; j < ArrayRequest.length; j++) {
+          if (!isNaN(parseFloat(ArrayRequest[i]))) {
+            if (ArrayRequest[i - 1] == searchPrix[j] || ArrayRequest[i - 2] == searchPrix[j] || ArrayRequest[i + 1] == searchPrix[j] || ArrayRequest[i + 2] == searchPrix[j]) {
+
+              if (answerUser["prix"] == "") {
+                answerUser["prix"] = ArrayRequest[i];
+                price              = ArrayRequest[i];
+              } else {
+                splitSizePrix = answerUser["prix"].split(", ");
+                ajout         = 0;
+                for (let k = 0; k < splitSizePrix.length; k++) {
+                  if (splitSizePrix[k] == ArrayRequest[i]) {
+                    ajout = 1;
+                  }
+                }
+                if (ajout == 0) {
+                  answerUser["prix"] = answerUser["prix"] + ", " + ArrayRequest[i];
+                }
+              }
+            }
+          }
+        }
+      }
+
+      retour            = 'Je vois que vous recherchez un vin';
+      questionManquante = '';
+
+      if (answerUser["vin"] != "") {
+        retour = retour + ' ' + answerUser["vin"];
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method       : "categoriesRequested",
+              idChatRequest: idChatRequest,
+              categories   : categories
+            },
+          success: function (response) {
+          }
+        });
+      } else {
+        if (questionManquante == '') {
+          questionManquante = '1';
+        } else {
+          questionManquante = questionManquante + ', 1';
+        }
+      }
+
+      if (answerUser["arome"] != "") {
+        retour = retour + ', avec un gout de ' + answerUser["arome"];
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method       : "aromasRequested",
+              idChatRequest: idChatRequest,
+              aromas       : aromas
+            },
+          success: function (response) {
+          }
+        });
+      } else {
+        if (questionManquante == '') {
+          questionManquante = '2';
+        } else {
+          questionManquante = questionManquante + ', 2';
+        }
+      }
+
+      if (answerUser["plat"] != "") {
+        retour = retour + ', pour accompagner ' + answerUser["plat"];
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method       : "dishRequested",
+              idChatRequest: idChatRequest,
+              dish         : dish
+            },
+          success: function (response) {
+          }
+        });
+      } else {
+        if (questionManquante == '') {
+          questionManquante = '3';
+        } else {
+          questionManquante = questionManquante + ', 3';
+        }
+      }
+      if (answerUser["occasion"] != "") {
+        retour = retour + ', pour une occasion comme ' + answerUser["occasion"];
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method       : "opportunityRequested",
+              idChatRequest: idChatRequest,
+              opportunity  : opportunity
+            },
+          success: function (response) {
+          }
+        });
+      } else {
+        if (questionManquante == '') {
+          questionManquante = '4';
+        } else {
+          questionManquante = questionManquante + ', 4';
+        }
+      }
+
+      if (answerUser["cepage"] != "") {
+        retour = retour + ', provenant du cepage de ' + answerUser["cepage"];
+      } else {
+        if (questionManquante == '') {
+          questionManquante = '5';
+        } else {
+          questionManquante = questionManquante + ', 5';
+        }
+      }
+      if (answerUser["marque"] != "") {
+        retour = retour + ', avec la marque ' + answerUser["marque"];
+      } else {
+        if (questionManquante == '') {
+          questionManquante = '6';
+        } else {
+          questionManquante = questionManquante + ', 6';
+        }
+      }
+
+      if (answerUser["date"] != "") {
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method       : "yearRequested",
+              idChatRequest: idChatRequest,
+              year         : year
+            },
+          success: function (response) {
+          }
+        });
+        retour = retour + ', datant de ' + answerUser["date"];
+      } else {
+        if (questionManquante == '') {
+          questionManquante = '7';
+        } else {
+          questionManquante = questionManquante + ', 7';
+        }
+      }
+      if (answerUser["prix"] != "") {
+        $.ajax({
+          url    : 'ajax_call.php',
+          method : 'POST',
+          data   :
+            {
+              method       : "priceRequested",
+              idChatRequest: idChatRequest,
+              price        : price
+            },
+          success: function (response) {
+          }
+        });
+        retour = retour + ', pour un budget de ' + answerUser["prix"];
+      } else {
+        if (questionManquante == '') {
+          questionManquante = '8';
+        } else {
+          questionManquante = questionManquante + ', 8';
+        }
+      }
+
+      var ladate              = new Date();
+      var recapitulatif       = document.createElement("div");
+      recapitulatif.className = "message-chatbot container-message-chatbot";
+      recapitulatif.innerHTML = "<div><p id='text-message' style='font-size:14px;'>" + retour + "</p></div><p class='date-message'><span>envoyé à </span>" + ladate.getHours() + " : " + ladate.getMinutes() + "</p>";
+      document.getElementById("message-content-chatbot").appendChild(recapitulatif);
+
+      var relance       = document.createElement("div");
+      relance.className = "message-chatbot container-message-chatbot";
+      relance.innerHTML = "<div><p id='text-message' style='font-size:14px;'>Alors, prêt à continuer ?</p></div><p class='date-message'><span>envoyé à </span>" + ladate.getHours() + " : " + ladate.getMinutes() + "</p>";
+      document.getElementById("message-content-chatbot").appendChild(relance);
+
     }
   });
-
-
-  //Définition des tableaux de noms
-  let searchWine     = [
-    'vin',
-    'vain',
-    'alcool',
-    'rose',
-    'rosé',
-    'rouge',
-    'blanc',
-    'blan'];
-  let searchArome    = [
-    'gout',
-    'gou',
-    'goud',
-    'arome',
-    'arrome',
-    'odeur',
-    'texture'];
-  let searchPlat     = [
-    'mangé',
-    'manger',
-    'déguster',
-    'deguster',
-    'degusté',
-    'deguste',
-    'plat'];
-  let searchOccasion = [
-    'occasion',
-    'compagnie'];
-  let searchCepage   = [
-    'cepage',
-    'varite',
-    'varieté'];
-  let searchMarque   = [
-    'domaine',
-    'chateau',
-    'sainte',
-    'marque'];
-  let searchDate     = [
-    'datant',
-    'agé',
-    'age'];
-  let searchPrix     = [
-    'entre',
-    'coutant',
-    '€'];
-
-  let motEnTrop = [
-    'en',
-    'de',
-    'avec',
-    'un',
-    'pour'];
-  answerUser    = {
-    "vin"     : "",
-    "arome"   : "",
-    "plat"    : "",
-    "occasion": "",
-    "cepage"  : "",
-    "marque"  : "",
-    "date"    : "",
-    "prix"    : ""
-  };
-
-  ArrayRequest = request.split(" ");
-
-
-  let categories = [];
-  //recherche du vin
-  for (let i = 0; i < ArrayRequest.length; i++) {
-    for (let j = 0; j < ArrayRequest.length; j++) {
-      let motSearch = [
-        'rosé',
-        'blanc',
-        'rouge'];
-      if (ArrayRequest[i] == searchWine[j]) {
-        for (let k = 0; k < motSearch.length; k++) {
-          if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
-            if (answerUser["vin"] == "") {
-              answerUser["vin"] = motSearch[k];
-            } else if (answerUser["vin"] != motSearch[k]) {
-              answerUser["vin"] = answerUser["vin"] + ", " + motSearch[k];
-            }
-            categories.push(k + 1);
-          }
-        }
-      }
-    }
-  }
-
-  let aromas = []
-  //recherche des aromes
-  for (let i = 0; i < ArrayRequest.length; i++) {
-    for (let j = 0; j < ArrayRequest.length; j++) {
-      let motSearch = [
-        'végétal',
-        'fruité',
-        'floral',
-        'Empyromatique',
-        'épicé',];
-      if (ArrayRequest[i] == searchArome[j]) {
-        for (let k = 0; k < motSearch.length; k++) {
-          if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
-            if (answerUser["arome"] == "") {
-              answerUser["arome"] = motSearch[k];
-            } else if (answerUser["arome"] != motSearch[k]) {
-              answerUser["arome"] = answerUser["arome"] + ", " + motSearch[k];
-            }
-            aromas.push(k + 1);
-          }
-        }
-      }
-    }
-  }
-  let dish = "";
-  //recherche des plat
-  for (let i = 0; i < ArrayRequest.length; i++) {
-    for (let j = 0; j < ArrayRequest.length; j++) {
-      let motSearch = [
-        'barbecue',
-        'fromages',
-        'viande',
-        'poisson',
-        'fruits de mer',
-        'dessert'];
-      if (ArrayRequest[i] == searchPlat[j]) {
-        for (let k = 0; k < motSearch.length; k++) {
-          if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
-            if (answerUser["plat"] == "") {
-              answerUser["plat"] = motSearch[k];
-            } else if (answerUser["plat"] != motSearch[k]) {
-              answerUser["plat"] = answerUser["plat"] + ", " + motSearch[k];
-            }
-            dish += motSearch[k];
-          }
-
-        }
-      }
-    }
-  }
-
-  let opportunity = ""
-  //recherche des occasion
-  for (let i = 0; i < ArrayRequest.length; i++) {
-    for (let j = 0; j < ArrayRequest.length; j++) {
-      let motSearch = [
-        'amis',
-        'repas',
-        'famille',
-        'grand',
-        'soir',
-        'soirée'];
-      if (ArrayRequest[i] == searchOccasion[j]) {
-        for (let k = 0; k < motSearch.length; k++) {
-          if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
-            if (answerUser["occasion"] == "") {
-              answerUser["occasion"] = motSearch[k];
-            } else if (answerUser["occasion"] != motSearch[k]) {
-              answerUser["occasion"] = answerUser["occasion"] + ", " + motSearch[k];
-            }
-            opportunity += motSearch[k];
-          }
-
-        }
-      }
-    }
-  }
-
-
-  //recherche des cepage
-  for (let i = 0; i < ArrayRequest.length; i++) {
-    for (let j = 0; j < ArrayRequest.length; j++) {
-      let motSearch = [
-        'Mourvèdre',
-        'Syrah',
-        'Cabernet sauvignon',
-        'Rolle',
-        'Cinsault',
-        'Grenache noir',
-        'Tibouren',
-        'Sémillon',
-        'Carignan'];
-      if (ArrayRequest[i] == searchCepage[j]) {
-        for (let k = 0; k < motSearch.length; k++) {
-          if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
-            if (answerUser["cepage"] == "") {
-              answerUser["cepage"] = motSearch[k];
-            } else if (answerUser["cepage"] != motSearch[k]) {
-              answerUser["cepage"] = answerUser["cepage"] + ", " + motSearch[k];
-            }
-          }
-
-        }
-      }
-    }
-  }
-
-  //recherche des marque
-  for (let i = 0; i < ArrayRequest.length; i++) {
-    for (let j = 0; j < ArrayRequest.length; j++) {
-      let motSearch = [
-        'Domaine',
-        'Sainte',
-        'Roseline',
-        'Chateau',
-        'Demoiselles'];
-      if (ArrayRequest[i] == searchMarque[j]) {
-        for (let k = 0; k < motSearch.length; k++) {
-          if (ArrayRequest[i - 1] == motSearch[k] || ArrayRequest[i - 2] == motSearch[k] || ArrayRequest[i + 1] == motSearch[k] || ArrayRequest[i + 2] == motSearch[k]) {
-            if (answerUser["marque"] == "") {
-              answerUser["marque"] = motSearch[k];
-            } else if (answerUser["marque"] != motSearch[k]) {
-              answerUser["marque"] = answerUser["marque"] + ", " + motSearch[k];
-            }
-          }
-
-        }
-      }
-    }
-  }
-
-  let year = "";
-  //recherche des date
-  for (let i = 0; i < ArrayRequest.length; i++) {
-    for (let j = 0; j < ArrayRequest.length; j++) {
-      if (!isNaN(parseFloat(ArrayRequest[i]))) {
-        if (ArrayRequest[i - 1] == searchDate[j] || ArrayRequest[i - 2] == searchDate[j]) {
-          alert(ArrayRequest[i - 1] + ' ' + searchDate[j]);
-          if (answerUser["date"] == "") {
-            answerUser["date"] = ArrayRequest[i];
-            year = ArrayRequest[i]
-          } else {
-            splitSizeDate = answerUser["date"].split(", ");
-            ajoutdate     = 0;
-            for (let k = 0; k < splitSizeDate.length; k++) {
-              if (splitSizeDate[k] == ArrayRequest[i]) {
-                ajoutdate = 1;
-              }
-            }
-            if (ajoutdate == 0) {
-              answerUser["date"] = answerUser["date"] + ", " + ArrayRequest[i];
-            }
-          }
-        }
-      }
-    }
-  }
-
-  let price = "";
-  //recherche des prix
-  for (let i = 0; i < ArrayRequest.length; i++) {
-    for (let j = 0; j < ArrayRequest.length; j++) {
-      if (!isNaN(parseFloat(ArrayRequest[i]))) {
-        if (ArrayRequest[i - 1] == searchPrix[j] || ArrayRequest[i - 2] == searchPrix[j] || ArrayRequest[i + 1] == searchPrix[j] || ArrayRequest[i + 2] == searchPrix[j]) {
-
-          if (answerUser["prix"] == "") {
-            answerUser["prix"] = ArrayRequest[i];
-            price = ArrayRequest[i];
-          } else {
-            splitSizePrix = answerUser["prix"].split(", ");
-            ajout         = 0;
-            for (let k = 0; k < splitSizePrix.length; k++) {
-              if (splitSizePrix[k] == ArrayRequest[i]) {
-                ajout = 1;
-              }
-            }
-            if (ajout == 0) {
-              answerUser["prix"] = answerUser["prix"] + ", " + ArrayRequest[i];
-            }
-          }
-        }
-      }
-    }
-  }
-
-  retour            = 'Je vois que vous recherchez un vin';
-  questionManquante = '';
-
-  if (answerUser["vin"] != "") {
-    retour = retour + ' ' + answerUser["vin"];
-    $.ajax({
-      url    : 'ajax_call.php',
-      method : 'POST',
-      data   :
-        {
-          method: "categoriesRequested",
-          idChatRequest: idChatRequest,
-          categories: categories
-        },
-      success: function (response) {
-      }
-    });
-  } else {
-    if (questionManquante == '') {
-      questionManquante = '1';
-    } else {
-      questionManquante = questionManquante + ', 1';
-    }
-  }
-
-  if (answerUser["arome"] != "") {
-    retour = retour + ', avec un gout de ' + answerUser["arome"];
-    $.ajax({
-      url    : 'ajax_call.php',
-      method : 'POST',
-      data   :
-        {
-          method: "aromasRequested",
-          idChatRequest: idChatRequest,
-          aromas: aromas
-        },
-      success: function (response) {
-      }
-    });
-  } else {
-    if (questionManquante == '') {
-      questionManquante = '2';
-    } else {
-      questionManquante = questionManquante + ', 2';
-    }
-  }
-
-  if (answerUser["plat"] != "") {
-    retour = retour + ', pour accompagner ' + answerUser["plat"];
-    $.ajax({
-      url    : 'ajax_call.php',
-      method : 'POST',
-      data   :
-        {
-          method: "dishRequested",
-          idChatRequest: idChatRequest,
-          dish: dish
-        },
-      success: function (response) {
-      }
-    });
-  } else {
-    if (questionManquante == '') {
-      questionManquante = '3';
-    } else {
-      questionManquante = questionManquante + ', 3';
-    }
-  }
-  if (answerUser["occasion"] != "") {
-    retour = retour + ', pour une occasion comme ' + answerUser["occasion"];
-    $.ajax({
-      url    : 'ajax_call.php',
-      method : 'POST',
-      data   :
-        {
-          method: "opportunityRequested",
-          idChatRequest: idChatRequest,
-          opportunity: opportunity
-        },
-      success: function (response) {
-      }
-    });
-  } else {
-    if (questionManquante == '') {
-      questionManquante = '4';
-    } else {
-      questionManquante = questionManquante + ', 4';
-    }
-  }
-
-  if (answerUser["cepage"] != "") {
-    retour = retour + ', provenant du cepage de ' + answerUser["cepage"];
-  } else {
-    if (questionManquante == '') {
-      questionManquante = '5';
-    } else {
-      questionManquante = questionManquante + ', 5';
-    }
-  }
-  if (answerUser["marque"] != "") {
-    retour = retour + ', avec la marque ' + answerUser["marque"];
-  } else {
-    if (questionManquante == '') {
-      questionManquante = '6';
-    } else {
-      questionManquante = questionManquante + ', 6';
-    }
-  }
-
-  if (answerUser["date"] != "") {
-    $.ajax({
-      url    : 'ajax_call.php',
-      method : 'POST',
-      data   :
-        {
-          method: "yearRequested",
-          idChatRequest: idChatRequest,
-          year: year
-        },
-      success: function (response) {
-      }
-    });
-    retour = retour + ', datant de ' + answerUser["date"];
-  } else {
-    if (questionManquante == '') {
-      questionManquante = '7';
-    } else {
-      questionManquante = questionManquante + ', 7';
-    }
-  }
-  if (answerUser["prix"] != "") {
-    $.ajax({
-      url    : 'ajax_call.php',
-      method : 'POST',
-      data   :
-        {
-          method: "priceRequested",
-          idChatRequest: idChatRequest,
-          price: price
-        },
-      success: function (response) {
-      }
-    });
-    retour = retour + ', pour un budget de ' + answerUser["prix"];
-  } else {
-    if (questionManquante == '') {
-      questionManquante = '8';
-    } else {
-      questionManquante = questionManquante + ', 8';
-    }
-  }
-
-  var ladate              = new Date();
-  var recapitulatif       = document.createElement("div");
-  recapitulatif.className = "message-chatbot container-message-chatbot";
-  recapitulatif.innerHTML = "<div><p id='text-message' style='font-size:14px;'>" + retour + "</p></div><p class='date-message'><span>envoyé à </span>" + ladate.getHours() + " : " + ladate.getMinutes() + "</p>";
-  document.getElementById("message-content-chatbot").appendChild(recapitulatif);
-
-  var relance       = document.createElement("div");
-  relance.className = "message-chatbot container-message-chatbot";
-  relance.innerHTML = "<div><p id='text-message' style='font-size:14px;'>Alors, prêt à continuer ?</p></div><p class='date-message'><span>envoyé à </span>" + ladate.getHours() + " : " + ladate.getMinutes() + "</p>";
-  document.getElementById("message-content-chatbot").appendChild(relance);
-
-
 }
 
 //Au lancement de la page
@@ -527,9 +530,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
           method : 'POST',
           data   :
             {
-              method: "categoriesRequested",
+              method       : "categoriesRequested",
               idChatRequest: idChatRequest,
-              categories: categories
+              categories   : categories
             },
           success: function (response) {
           }
@@ -548,9 +551,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
           method : 'POST',
           data   :
             {
-              method: "aromasRequested",
+              method       : "aromasRequested",
               idChatRequest: idChatRequest,
-              aromas: aromas
+              aromas       : aromas
             },
           success: function (response) {
           }
@@ -563,9 +566,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
           method : 'POST',
           data   :
             {
-              method: "dishRequested",
+              method       : "dishRequested",
               idChatRequest: idChatRequest,
-              dish: document.getElementById('contenu-message').value
+              dish         : document.getElementById('contenu-message').value
             },
           success: function (response) {
           }
@@ -578,9 +581,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
           method : 'POST',
           data   :
             {
-              method: "opportunityRequested",
+              method       : "opportunityRequested",
               idChatRequest: idChatRequest,
-              opportunity: document.getElementById('contenu-message').value
+              opportunity  : document.getElementById('contenu-message').value
             },
           success: function (response) {
           }
@@ -593,9 +596,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
           method : 'POST',
           data   :
             {
-              method: "grapeVarietyRequested",
+              method       : "grapeVarietyRequested",
               idChatRequest: idChatRequest,
-              grapeVariety: document.getElementById('contenu-message').value
+              grapeVariety : document.getElementById('contenu-message').value
             },
           success: function (response) {
           }
@@ -614,9 +617,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
           method : 'POST',
           data   :
             {
-              method: "marksRequested",
+              method       : "marksRequested",
               idChatRequest: idChatRequest,
-              marks: marks
+              marks        : marks
             },
           success: function (response) {
           }
@@ -629,9 +632,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
           method : 'POST',
           data   :
             {
-              method: "yearRequested",
+              method       : "yearRequested",
               idChatRequest: idChatRequest,
-              year: document.getElementById('contenu-message').value
+              year         : document.getElementById('contenu-message').value
             },
           success: function (response) {
           }
@@ -645,9 +648,9 @@ document.getElementById("button-submit").addEventListener("click", function () {
           method : 'POST',
           data   :
             {
-              method: "priceRequested",
+              method       : "priceRequested",
               idChatRequest: idChatRequest,
-              price: document.getElementById('contenu-message').value
+              price        : document.getElementById('contenu-message').value
             },
           success: function (response) {
           }
